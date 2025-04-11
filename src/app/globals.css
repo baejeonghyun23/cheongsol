@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* S-CoreDream 폰트 추가 */
+@font-face {
+  font-family: 'S-CoreDream-3Light';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -115,8 +123,10 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    font-family: 'S-CoreDream-3Light', sans-serif;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'S-CoreDream-3Light', sans-serif;
   }
 }
