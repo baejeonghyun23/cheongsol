@@ -49,7 +49,7 @@ export function BirthdayCake() {
     let lastY = 0;
     let lastZ = 0;
     let lastTime = 0;
-    const threshold = 12; // 흔들기 감도 조절 (낮춤)
+    const threshold = 25; // 흔들기 감도 조절 (값을 높여서 감도를 낮춤)
     
     const handleMotion = (event: DeviceMotionEvent) => {
       const acceleration = event.accelerationIncludingGravity;

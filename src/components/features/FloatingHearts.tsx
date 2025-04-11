@@ -52,9 +52,9 @@ export function FloatingHearts() {
           animate={{ 
             y: "-100vh", 
             x: [
-              heart.x > 50 ? "5%" : "-5%", 
-              heart.x > 50 ? "-5%" : "5%", 
-              heart.x > 50 ? "5%" : "-5%"
+              heart.x > 50 ? "2%" : "-2%", 
+              heart.x > 50 ? "-2%" : "2%", 
+              heart.x > 50 ? "2%" : "-2%"
             ],
             rotate: heart.rotate + 20
           }}

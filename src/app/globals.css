@@ -9,6 +9,13 @@
   font-style: normal;
 }
 
+/* 횡스크롤 방지 */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
