@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 
 export function BirthdayCake() {
@@ -41,96 +41,6 @@ export function BirthdayCake() {
         setShowMessage(false);
       }, 10000);
     }
-  }, [candlesLit]);
-  
-  // 장치 흔들기 감지 (모바일)
-  useEffect(() => {
-    let lastX = 0;
-    let lastY = 0;
-    let lastZ = 0;
-    let lastTime = 0;
-    const threshold = 25; // 흔들기 감도 조절 (값을 높여서 감도를 낮춤)
-    
-    const handleMotion = (event: DeviceMotionEvent) => {
-      const acceleration = event.accelerationIncludingGravity;
-      if (!acceleration) return;
-      
-      const currentTime = new Date().getTime();
-      
-      if ((currentTime - lastTime) > 100) { // 100ms마다 체크
-        const diffTime = currentTime - lastTime;
-        lastTime = currentTime;
-        
-        const x = acceleration.x || 0;
-        const y = acceleration.y || 0;
-        const z = acceleration.z || 0;
-        
-        const speed = Math.abs((x + y + z - lastX - lastY - lastZ) / diffTime) * 10000;
-        
-        if (speed > threshold && candlesLit.some(lit => lit)) {
-          // 디바이스 모션에서는 이벤트 객체 없이 호출
-          if (candlesLit.some(lit => lit)) {
-            setBlowing(true);
-            
-            // 각 초마다 시간차를 두고 꺼지는 효과
-            setTimeout(() => {
-              setCandlesLit([false, true, true]);
-            }, 300);
-            
-            setTimeout(() => {
-              setCandlesLit([false, false, true]);
-            }, 600);
-            
-            setTimeout(() => {
-              setCandlesLit([false, false, false]);
-              setShowMessage(true);
-            }, 900);
-            
-            // 불기 동작 초기화
-            setTimeout(() => {
-              setBlowing(false);
-            }, 1500);
-            
-            // 10초 후에 초 다시 켜기
-            setTimeout(() => {
-              setCandlesLit([true, true, true]);
-              setShowMessage(false);
-            }, 10000);
-          }
-        }
-        
-        lastX = x;
-        lastY = y;
-        lastZ = z;
-      }
-    };
-    
-    // 권한 요청 함수
-    const requestMotionPermission = async () => {
-      // iOS 13+ 디바이스에서 권한 요청이 필요함
-      // @ts-expect-error - 일부 브라우저에서만 존재하는 API
-      if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
-        try {
-          // @ts-expect-error - iOS에서 사용되는 API
-          const permissionState = await DeviceMotionEvent.requestPermission();
-          if (permissionState === 'granted') {
-            window.addEventListener('devicemotion', handleMotion);
-          }
-        } catch (error) {
-          console.error('모션 권한 요청 오류:', error);
-        }
-      } else {
-        // 권한 요청이 필요없는 브라우저나 기기
-        window.addEventListener('devicemotion', handleMotion);
-      }
-    };
-    
-    // 페이지 로드 시 자동으로 권한 요청
-    requestMotionPermission();
-    
-    return () => {
-      window.removeEventListener('devicemotion', handleMotion);
-    };
   }, [candlesLit]);
   
   return (
